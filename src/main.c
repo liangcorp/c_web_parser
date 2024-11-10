@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
 	// bind the socket to localhost port 8888
 	if (bind(master_socket, (struct sockaddr *)&address, sizeof(address)) <
 	    0) {
-		perror(" bind failed");
+		perror("bind failed");
 		exit(EXIT_FAILURE);
 	}
 	printf(" Listener on port % d \n", PORT);
@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
 	// try to specify maximum of 3 pending connections for
 	// the master socket
 	if (listen(master_socket, 3) < 0) {
-		perror(" listen");
+		perror("listen");
 		exit(EXIT_FAILURE);
 	}
 
@@ -104,7 +104,7 @@ int main(int argc, char *argv[])
 		activity = select(max_sd + 1, &readfds, NULL, NULL, NULL);
 
 		if ((activity < 0) || (errno != EINTR)) {
-			printf(" select error");
+			printf("select error");
 		}
 
 		// If something happened on the master socket ,
@@ -113,7 +113,7 @@ int main(int argc, char *argv[])
 			if ((new_socket = accept(master_socket,
 						 (struct sockaddr *)&address,
 						 (socklen_t *)&addrlen)) < 0) {
-				perror(" accept");
+				perror("accept");
 				exit(EXIT_FAILURE);
 			}
 
@@ -126,7 +126,7 @@ int main(int argc, char *argv[])
 			// send new connection greeting message
 			if (send(new_socket, message, strlen(message), 0) !=
 			    strlen(message)) {
-				perror(" send");
+				perror("send");
 			}
 
 			puts("Welcome message sent successfully");
