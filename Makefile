@@ -11,5 +11,8 @@ static:
 check:
 	${CC} --version
 
+distcheck:
+	uname -a
+
 clean:
 	rm -rf ./bin
