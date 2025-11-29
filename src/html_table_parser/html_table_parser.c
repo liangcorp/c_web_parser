@@ -1,106 +1,106 @@
-#include <stdio.h>
 #include <string.h>
 
 #include "html_table_parser.h"
 
-html_tag_count_t parse_html_table(char *html_str) {
-    html_tag_count_t htc;
+html_tag_count_t parse_html_table(char *html_str)
+{
+	html_tag_count_t htc;
 
-    htc.table_head_occrence = 0;
-    htc.tr_head_occrence = 0;
-    htc.th_head_occrence = 0;
-    htc.td_head_occrence = 0;
+	htc.table_head_occurrence = 0;
+	htc.tr_head_occurrence = 0;
+	htc.th_head_occurrence = 0;
+	htc.td_head_occurrence = 0;
 
-    htc.table_tail_occrence = 0;
-    htc.tr_tail_occrence = 0;
-    htc.th_tail_occrence = 0;
-    htc.td_tail_occrence = 0;
+	htc.table_tail_occurrence = 0;
+	htc.tr_tail_occurrence = 0;
+	htc.th_tail_occurrence = 0;
+	htc.td_tail_occurrence = 0;
 
-    unsigned int table_head_fit_count = 0;
-    unsigned int tr_head_fit_count = 0;
-    unsigned int th_head_fit_count = 0;
-    unsigned int td_head_fit_count = 0;
+	unsigned int table_head_fit_count = 0;
+	unsigned int tr_head_fit_count = 0;
+	unsigned int th_head_fit_count = 0;
+	unsigned int td_head_fit_count = 0;
 
-    unsigned int table_tail_fit_count = 0;
-    unsigned int tr_tail_fit_count = 0;
-    unsigned int th_tail_fit_count = 0;
-    unsigned int td_tail_fit_count = 0;
+	unsigned int table_tail_fit_count = 0;
+	unsigned int tr_tail_fit_count = 0;
+	unsigned int th_tail_fit_count = 0;
+	unsigned int td_tail_fit_count = 0;
 
-    unsigned int i = 0;
-    unsigned int j = 0;
+	unsigned int i = 0;
+	unsigned int j = 0;
 
-    htc.result = -1;
+	htc.result = -1;
 
-    while (*(html_str + i) != NULL) {
-        for (j = 0; j < HTML_TABLE_HEAD_LENGTH; j++)
-            if (HTML_TABLE_HEAD_STR[j] == *(html_str + i + j))
-                table_head_fit_count++;
+	while (*(html_str + i) != '\0') {
+		for (j = 0; j < HTML_TABLE_HEAD_LENGTH; j++)
+			if (HTML_TABLE_HEAD_STR[j] == *(html_str + i + j))
+				table_head_fit_count++;
 
-        for (j = 0; j < HTML_TABLE_TAIL_LENGTH; j++)
-            if (HTML_TABLE_TAIL_STR[j] == *(html_str + i + j))
-                table_tail_fit_count++;
+		for (j = 0; j < HTML_TABLE_TAIL_LENGTH; j++)
+			if (HTML_TABLE_TAIL_STR[j] == *(html_str + i + j))
+				table_tail_fit_count++;
 
-        for (j = 0; j < HTML_TABLE_ELEMENT_HEAD_LENGTH; j++) {
-            if (HTML_TR_HEAD_STR[j] == *(html_str + i + j))
-                tr_head_fit_count++;
+		for (j = 0; j < HTML_TABLE_ELEMENT_HEAD_LENGTH; j++) {
+			if (HTML_TR_HEAD_STR[j] == *(html_str + i + j))
+				tr_head_fit_count++;
 
-            if (HTML_TH_HEAD_STR[j] == *(html_str + i + j))
-                th_head_fit_count++;
+			if (HTML_TH_HEAD_STR[j] == *(html_str + i + j))
+				th_head_fit_count++;
 
-            if (HTML_TD_HEAD_STR[j] == *(html_str + i + j))
-                td_head_fit_count++;
-        }
+			if (HTML_TD_HEAD_STR[j] == *(html_str + i + j))
+				td_head_fit_count++;
+		}
 
-        for (j = 0; j < HTML_TABLE_ELEMENT_TAIL_LENGTH; j++) {
-            if (HTML_TR_TAIL_STR[j] == *(html_str + i + j))
-                tr_tail_fit_count++;
+		for (j = 0; j < HTML_TABLE_ELEMENT_TAIL_LENGTH; j++) {
+			if (HTML_TR_TAIL_STR[j] == *(html_str + i + j))
+				tr_tail_fit_count++;
 
-            if (HTML_TH_TAIL_STR[j] == *(html_str + i + j))
-                th_tail_fit_count++;
+			if (HTML_TH_TAIL_STR[j] == *(html_str + i + j))
+				th_tail_fit_count++;
 
-            if (HTML_TD_TAIL_STR[j] == *(html_str + i + j))
-                td_tail_fit_count++;
-        }
+			if (HTML_TD_TAIL_STR[j] == *(html_str + i + j))
+				td_tail_fit_count++;
+		}
 
-        if (table_head_fit_count == HTML_TABLE_HEAD_LENGTH)
-            htc.table_head_occrence++;
+		if (table_head_fit_count == HTML_TABLE_HEAD_LENGTH)
+			htc.table_head_occurrence++;
 
-        if (tr_head_fit_count == HTML_TABLE_ELEMENT_HEAD_LENGTH)
-            htc.tr_head_occrence++;
+		if (tr_head_fit_count == HTML_TABLE_ELEMENT_HEAD_LENGTH)
+			htc.tr_head_occurrence++;
 
-        if (th_head_fit_count == HTML_TABLE_ELEMENT_HEAD_LENGTH)
-            htc.th_head_occrence++;
+		if (th_head_fit_count == HTML_TABLE_ELEMENT_HEAD_LENGTH)
+			htc.th_head_occurrence++;
 
-        if (td_head_fit_count == HTML_TABLE_ELEMENT_HEAD_LENGTH)
-            htc.td_head_occrence++;
+		if (td_head_fit_count == HTML_TABLE_ELEMENT_HEAD_LENGTH)
+			htc.td_head_occurrence++;
 
-        if (table_tail_fit_count == HTML_TABLE_TAIL_LENGTH)
-            htc.table_tail_occrence++;
+		if (table_tail_fit_count == HTML_TABLE_TAIL_LENGTH)
+			htc.table_tail_occurrence++;
 
-        if (tr_tail_fit_count == HTML_TABLE_ELEMENT_TAIL_LENGTH)
-            htc.tr_tail_occrence++;
+		if (tr_tail_fit_count == HTML_TABLE_ELEMENT_TAIL_LENGTH)
+			htc.tr_tail_occurrence++;
 
-        if (th_tail_fit_count == HTML_TABLE_ELEMENT_TAIL_LENGTH)
-            htc.th_tail_occrence++;
+		if (th_tail_fit_count == HTML_TABLE_ELEMENT_TAIL_LENGTH)
+			htc.th_tail_occurrence++;
 
-        if (td_tail_fit_count == HTML_TABLE_ELEMENT_TAIL_LENGTH)
-            htc.td_tail_occrence++;
+		if (td_tail_fit_count == HTML_TABLE_ELEMENT_TAIL_LENGTH)
+			htc.td_tail_occurrence++;
 
-        i++;
+		i++;
 
-        table_head_fit_count = 0;
-        tr_head_fit_count = 0;
-        th_head_fit_count = 0;
-        td_head_fit_count = 0;
+		table_head_fit_count = 0;
+		tr_head_fit_count = 0;
+		th_head_fit_count = 0;
+		td_head_fit_count = 0;
 
-        table_tail_fit_count = 0;
-        tr_tail_fit_count = 0;
-        th_tail_fit_count = 0;
-        td_tail_fit_count = 0;
-    }
+		table_tail_fit_count = 0;
+		tr_tail_fit_count = 0;
+		th_tail_fit_count = 0;
+		td_tail_fit_count = 0;
+	}
 
-    if (htc.table_head_occrence == htc.table_tail_occrence)
-        htc.result = 0;
+	if (htc.table_head_occurrence == htc.table_tail_occurrence)
+		htc.result = 0;
 
-    return htc;
+	return htc;
 }
