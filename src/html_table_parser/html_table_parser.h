@@ -1,0 +1,6 @@
+#pragma once
+
+#define HTML_TABLE_HEAD_LENGTH 7
+#define HTML_TABLE_TAIL_LENGTH 8
+
+#define HTML_TABLE_ELEM
