@@ -1,2 +1,3 @@
-# c_web_parser
-Web content parser implemented in C
+# HTML Table Parser
+
+HTML Table content parser implemented in C
