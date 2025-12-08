@@ -1,6 +1,15 @@
 #include <stdio.h>
 
+#ifdef F_MEMORY_DEBUG
+
 #include "memory_debug.h"
+
+#else
+
+#include <malloc.h>
+
+#endif
+
 #include "html_table_parser.h"
 
 int main(void)
@@ -11,7 +20,7 @@ int main(void)
 	result_t result = get_html_table_tag_count(&htc, html_str);
 
 	int *test = NULL;
-	test = malloc(sizeof(int));
+	test = calloc(1, sizeof(int));
 	free(test);
 
 	if (result.is_ok) {
