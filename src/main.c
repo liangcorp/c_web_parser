@@ -10,9 +10,9 @@ int main(void)
 	html_tag_count_t htc = { 0, 0, 0, 0, 0, 0, 0, 0 };
 	result_t result = get_html_table_tag_count(&htc, html_str);
 
-    int *test = NULL;
-    test = malloc(sizeof(int));
-    free(test);
+	int *test = NULL;
+	test = malloc(sizeof(int));
+	free(test);
 
 	if (result.is_ok) {
 		printf("<table> count: %d\n", htc.table_head_occurrence);

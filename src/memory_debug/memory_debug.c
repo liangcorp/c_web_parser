@@ -2,18 +2,43 @@
 
 #include "memory_debug.h"
 
-void *f_debug_memory_malloc(unsigned int size, const char *file_name, unsigned int line_num) {
-    printf("malloc %d bytes of memory in file %s at line %d\n", size, file_name, line_num);
-    return malloc(size);
+void *f_debug_memory_malloc(unsigned int size, const char *file_name,
+			    unsigned int line_num)
+{
+#undef malloc
+	void *ptr = NULL;
+
+	ptr = malloc(size);
+
+	if (ptr == NULL) {
+		printf("MEM ERROR: Malloc returns NULL when trying to allocate %u bytes at line %u in file %s\n",
+		       size, line_num, file_name);
+		exit(0);
+	}
+
+	printf("%p malloc %u bytes of memory at line %u in file %s\n", ptr, size,
+	       line_num, file_name);
+	return ptr;
 }
 
-void *f_debug_memory_calloc(unsigned int num, unsigned int size, const char *file_name, unsigned int line_num) {
-
-    printf("calloc %d * %d bytes of memory in file %s at line %d\n", num, size, file_name, line_num);
-    return calloc(num, size);
+void *f_debug_memory_calloc(unsigned int num, unsigned int size, const char *file_name,
+			    unsigned int line_num)
+{
+#undef calloc
+	void *ptr = calloc(num, size);
+	if (ptr == NULL) {
+		printf("MEM ERROR: Malloc returns NULL when trying to allocate %u bytes at line %u in file %s\n",
+		       size, line_num, file_name);
+		exit(0);
+	}
+	printf("%p calloc %u * %u bytes of memory at line %u in file %s\n", ptr, num, size,
+	       line_num, file_name);
+	return ptr;
 }
 
-void f_debug_memory_free(void *ptr, const char *file_name, unsigned int line_num) {
-    printf("%p freed in file %s at line %d\n", ptr, file_name, line_num);
-    free(ptr);
+void f_debug_memory_free(void *ptr, const char *file_name, unsigned int line_num)
+{
+#undef free
+	printf("%p freed at line %u in file %s\n", ptr, line_num, file_name);
+	free(ptr);
 }
