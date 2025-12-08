@@ -1,7 +1,14 @@
 #include <stdio.h>
-#include <assert.h>
+
+#ifdef F_MEMORY_DEBUG
 
 #include "memory_debug.h"
+
+#else
+
+#include <stdlib.h>
+
+#endif
 
 void *f_debug_memory_malloc(unsigned int size, const char *file, unsigned int line)
 {
@@ -13,7 +20,7 @@ void *f_debug_memory_malloc(unsigned int size, const char *file, unsigned int li
 	if (ptr == NULL) {
 		printf("MEM ERROR: malloc returns NULL when trying to allocate %u bytes at line %u in file %s\n",
 		       size, line, file);
-		abort();
+		exit(1);
 	}
 
 	printf("%p malloc %u bytes of memory at line %u in file %s\n", ptr, size, line, file);
@@ -28,7 +35,7 @@ void *f_debug_memory_calloc(unsigned int num, unsigned int size, const char *fil
 	if (ptr == NULL) {
 		printf("MEM ERROR: calloc returns NULL when trying to allocate %u bytes at line %u in file %s\n",
 		       size, line, file);
-		abort();
+		exit(1);
 	}
 	printf("%p calloc %u * %u bytes of memory at line %u in file %s\n", ptr, num, size, line,
 	       file);
@@ -42,7 +49,7 @@ void *f_debug_memory_realloc(void *ptr, unsigned int size, const char *file, uns
 	if (new_ptr == NULL) {
 		printf("MEM ERROR: realloc returns NULL when trying to allocate %u bytes at line %u in file %s\n",
 		       size, line, file);
-		abort();
+		exit(1);
 	}
 	printf("%p realloc %u bytes of memory at line %u in file %s\n", new_ptr, size, line, file);
 	return new_ptr;
