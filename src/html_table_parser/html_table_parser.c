@@ -2,7 +2,7 @@
 
 #include "html_table_parser.h"
 
-result_t get_html_table_tag_count(html_tag_count_t *htc, char *html_str)
+result_t get_html_table_tag_count(html_tag_count_t *htc, const char *html_str)
 {
 	unsigned int table_head_fit_count = 0;
 	unsigned int tr_head_fit_count = 0;
