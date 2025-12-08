@@ -3,24 +3,20 @@ CC=clang
 all:
 	mkdir -p libs
 	mkdir -p bin
-	${CC} -Wall -Werror -Wpedantic -g -I ./libs/ -I ./src/include -c ./src/html_table_parser/html_table_parser.c -o ./libs/html_table_parser.o
+	${CC} -Wall -Werror -Wpedantic -std=c89 -g -I ./libs/ -I ./src/include -c ./src/html_table_parser/html_table_parser.c -o ./libs/html_table_parser.o
 	ar rcs ./libs/html_table_parser.a ./libs/html_table_parser.o
 	cd ..
-	${CC} -Wall -Werror -Wpedantic -g -I ./libs/ -I ./src/include -I ./src/html_table_parser -c ./src/main.c -o ./libs/main.o
-	${CC} -Wall -Werror -Wpedantic -g -o ./bin/html_table_parser ./libs/main.o ./libs/html_table_parser.a
+	${CC} -Wall -Werror -Wpedantic -std=c89 -g -I ./libs/ -I ./src/include -I ./src/html_table_parser -c ./src/main.c -o ./libs/main.o
+	${CC} -Wall -Werror -Wpedantic -std=c89 -g -o ./bin/html_table_parser ./libs/main.o ./libs/html_table_parser.a
 
 debug:
 	mkdir -p libs
 	mkdir -p bin
-	${CC} -fsanitize=address -Wall -Werror -Wpedantic -g -I ./libs/ -I ./src/include -c ./src/html_table_parser/html_table_parser.c -o ./libs/html_table_parser.o
+	${CC} -fsanitize=address -Wall -Werror -Wpedantic -std=c89 -g -I ./libs/ -I ./src/include -c ./src/html_table_parser/html_table_parser.c -o ./libs/html_table_parser.o
 	ar rcs ./libs/html_table_parser.a ./libs/html_table_parser.o
 	cd ..
-	${CC} -fsanitize=address -Wall -Werror -Wpedantic -g -I ./libs/ -I ./src/include -I ./src/html_table_parser -c ./src/main.c -o ./libs/main.o
-	${CC} -fsanitize=address -Wall -Werror -Wpedantic -g -o ./bin/html_table_parser ./libs/main.o ./libs/html_table_parser.a
-
-static:
-	mkdir bin
-	${CC} ./src/main.c -o ./bin/c_web_parser
+	${CC} -fsanitize=address -Wall -Werror -Wpedantic -std=c89 -g -I ./libs/ -I ./src/include -I ./src/html_table_parser -c ./src/main.c -o ./libs/main.o
+	${CC} -fsanitize=address -Wall -Werror -Wpedantic -std=c89 -g -o ./bin/html_table_parser ./libs/main.o ./libs/html_table_parser.a
 
 check:
 	${CC} --version

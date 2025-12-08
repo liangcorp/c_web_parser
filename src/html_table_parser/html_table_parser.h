@@ -1,5 +1,7 @@
 #pragma once
 
+#include "result.h"
+
 #define HTML_TABLE_HEAD_LENGTH 7
 #define HTML_TABLE_TAIL_LENGTH 8
 
@@ -28,8 +30,12 @@ typedef struct html_tag_count {
 	unsigned int tr_tail_occurrence;
 	unsigned int th_tail_occurrence;
 	unsigned int td_tail_occurrence;
-
-	int result;
 } html_tag_count_t;
 
-html_tag_count_t parse_html_table(char *html_str);
+result_t get_html_table_tag_count(html_tag_count_t *htc, char *html_str);
+result_t verify_html_table_architecture(char *html_str);
+
+bool check_table_tag_architecture(char *html_table_block_str);
+bool check_tr_tag_architecture(char *html_tr_block_str);
+bool check_th_tag_architecture(char *html_th_block_str);
+bool check_td_tag_architecture(char *html_td_block_str);

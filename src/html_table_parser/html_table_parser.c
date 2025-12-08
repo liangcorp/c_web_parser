@@ -2,20 +2,8 @@
 
 #include "html_table_parser.h"
 
-html_tag_count_t parse_html_table(char *html_str)
+result_t get_html_table_tag_count(html_tag_count_t *htc, char *html_str)
 {
-	html_tag_count_t htc;
-
-	htc.table_head_occurrence = 0;
-	htc.tr_head_occurrence = 0;
-	htc.th_head_occurrence = 0;
-	htc.td_head_occurrence = 0;
-
-	htc.table_tail_occurrence = 0;
-	htc.tr_tail_occurrence = 0;
-	htc.th_tail_occurrence = 0;
-	htc.td_tail_occurrence = 0;
-
 	unsigned int table_head_fit_count = 0;
 	unsigned int tr_head_fit_count = 0;
 	unsigned int th_head_fit_count = 0;
@@ -29,7 +17,8 @@ html_tag_count_t parse_html_table(char *html_str)
 	unsigned int i = 0;
 	unsigned int j = 0;
 
-	htc.result = -1;
+	result_t result = { false, "" };
+	memset(result.error_message, '\0', sizeof(result.error_message));
 
 	while (*(html_str + i) != '\0') {
 		for (j = 0; j < HTML_TABLE_HEAD_LENGTH; j++)
@@ -63,28 +52,28 @@ html_tag_count_t parse_html_table(char *html_str)
 		}
 
 		if (table_head_fit_count == HTML_TABLE_HEAD_LENGTH)
-			htc.table_head_occurrence++;
+			htc->table_head_occurrence++;
 
 		if (tr_head_fit_count == HTML_TABLE_ELEMENT_HEAD_LENGTH)
-			htc.tr_head_occurrence++;
+			htc->tr_head_occurrence++;
 
 		if (th_head_fit_count == HTML_TABLE_ELEMENT_HEAD_LENGTH)
-			htc.th_head_occurrence++;
+			htc->th_head_occurrence++;
 
 		if (td_head_fit_count == HTML_TABLE_ELEMENT_HEAD_LENGTH)
-			htc.td_head_occurrence++;
+			htc->td_head_occurrence++;
 
 		if (table_tail_fit_count == HTML_TABLE_TAIL_LENGTH)
-			htc.table_tail_occurrence++;
+			htc->table_tail_occurrence++;
 
 		if (tr_tail_fit_count == HTML_TABLE_ELEMENT_TAIL_LENGTH)
-			htc.tr_tail_occurrence++;
+			htc->tr_tail_occurrence++;
 
 		if (th_tail_fit_count == HTML_TABLE_ELEMENT_TAIL_LENGTH)
-			htc.th_tail_occurrence++;
+			htc->th_tail_occurrence++;
 
 		if (td_tail_fit_count == HTML_TABLE_ELEMENT_TAIL_LENGTH)
-			htc.td_tail_occurrence++;
+			htc->td_tail_occurrence++;
 
 		i++;
 
@@ -99,8 +88,15 @@ html_tag_count_t parse_html_table(char *html_str)
 		td_tail_fit_count = 0;
 	}
 
-	if (htc.table_head_occurrence == htc.table_tail_occurrence)
-		htc.result = 0;
+	if (htc->table_head_occurrence == htc->table_tail_occurrence &&
+	    htc->tr_head_occurrence == htc->tr_tail_occurrence &&
+	    htc->th_head_occurrence == htc->th_tail_occurrence &&
+	    htc->td_head_occurrence == htc->td_tail_occurrence) {
+		result.is_ok = true;
+	} else {
+		strncpy(result.error_message, "Malformed html table\n",
+			sizeof(result.error_message));
+	}
 
-	return htc;
+	return result;
 }
