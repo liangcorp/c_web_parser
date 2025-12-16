@@ -4,6 +4,9 @@
 
 #include "memory_debug.h"
 
+MemAllocRecordType mem_alloc_record = {NULL, 0, "", false};
+MemAllocRecordListType mem_alloc_record_list = { 0 };
+
 #else
 
 #include <malloc.h>

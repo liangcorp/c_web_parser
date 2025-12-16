@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include "result.h"
 
@@ -8,14 +9,14 @@
 
 #define LIST_SIZE 2048
 
-typedef struct mem_alloc_record {
-    unsigned int ptr_value;
+typedef struct MemAllocRecord {
+    unsigned int *ptr_value;
     unsigned int allocation_line;
     char *allocation_file;
-    _Bool is_freed;
+    bool is_freed;
 } MemAllocRecordType;
 
-typedef struct mem_alloc_record_list {
+typedef struct MemAllocRecordList {
     MemAllocRecordType m[LIST_SIZE];
 } MemAllocRecordListType;
 
