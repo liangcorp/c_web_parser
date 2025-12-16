@@ -17,7 +17,7 @@ int main(void)
 	const char *html_str = "<table><tr><td></td><td></td></tr></table>";
 
 	html_tag_count_t htc = { 0, 0, 0, 0, 0, 0, 0, 0 };
-	result_t result = get_html_table_tag_count(&htc, html_str);
+	ResultType result = get_html_table_tag_count(&htc, html_str);
 
 	int *test = NULL;
 	test = calloc(1, sizeof(int));

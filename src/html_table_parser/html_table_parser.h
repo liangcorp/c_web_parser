@@ -32,10 +32,10 @@ typedef struct html_tag_count {
 	unsigned int td_tail_occurrence;
 } html_tag_count_t;
 
-result_t get_html_table_tag_count(html_tag_count_t *htc, const char *html_str);
-result_t verify_html_table_architecture(char *html_str);
+ResultType get_html_table_tag_count(html_tag_count_t *htc, const char *html_str);
+ResultType verify_html_table_architecture(char *html_str);
 
-bool check_table_tag_architecture(char *html_table_block_str);
-bool check_tr_tag_architecture(char *html_tr_block_str);
-bool check_th_tag_architecture(char *html_th_block_str);
-bool check_td_tag_architecture(char *html_td_block_str);
+_Bool check_table_tag_architecture(char *html_table_block_str);
+_Bool check_tr_tag_architecture(char *html_tr_block_str);
+_Bool check_th_tag_architecture(char *html_th_block_str);
+_Bool check_td_tag_architecture(char *html_td_block_str);

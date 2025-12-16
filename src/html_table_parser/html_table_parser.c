@@ -1,8 +1,9 @@
 #include <string.h>
+#include <stdbool.h>
 
 #include "html_table_parser.h"
 
-result_t get_html_table_tag_count(html_tag_count_t *htc, const char *html_str)
+ResultType get_html_table_tag_count(html_tag_count_t *htc, const char *html_str)
 {
 	unsigned int table_head_fit_count = 0;
 	unsigned int tr_head_fit_count = 0;
@@ -17,7 +18,7 @@ result_t get_html_table_tag_count(html_tag_count_t *htc, const char *html_str)
 	unsigned int i = 0;
 	unsigned int j = 0;
 
-	result_t result = { false, "" };
+	ResultType result = { false, "" };
 	memset(result.error_message, '\0', sizeof(result.error_message));
 
 	while (*(html_str + i) != '\0') {
