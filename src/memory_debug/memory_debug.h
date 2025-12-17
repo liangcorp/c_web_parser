@@ -11,7 +11,7 @@
 #define FILENAME_SIZE_LIMIT 2048
 
 typedef struct MemAllocRecord {
-	unsigned int *ptr_value;
+	void *ptr_value;
 	unsigned int allocation_line;
 	char allocation_file[FILENAME_SIZE_LIMIT];
 } MemAllocRecordType;

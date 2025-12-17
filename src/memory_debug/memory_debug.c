@@ -90,7 +90,16 @@ void *f_debug_memory_realloc(void *ptr, unsigned int size, const char *file, uns
 void f_debug_memory_free(void *ptr, const char *file, unsigned int line)
 {
 #undef free
+    int i;
 	printf("%p freed at line %u in file %s\n", ptr, line, file);
+
+	for (i = 0; i < LIST_SIZE; i++) {
+		if (mem_alloc_record_list.m[i].ptr_value == ptr) {
+            mem_alloc_record_list.m[i].ptr_value = NULL;
+            mem_alloc_record_list.occurrences--;
+            break;
+        }
+	}
 	free(ptr);
 }
 
@@ -114,7 +123,7 @@ void f_debug_memory_leak_check(void)
 
     for (i = 0; i < LIST_SIZE; i++) {
         if (mem_alloc_record_list.m[i].ptr_value != NULL) {
-            printf("unfreed memory: %u allocated at line %u in file %s\n", *(mem_alloc_record_list.m[i].ptr_value), mem_alloc_record_list.m[i].allocation_line, mem_alloc_record_list.m[i].allocation_file);
+            printf("unfreed memory: %p allocated at line %u in file %s\n", mem_alloc_record_list.m[i].ptr_value, mem_alloc_record_list.m[i].allocation_line, mem_alloc_record_list.m[i].allocation_file);
         }
     }
 
