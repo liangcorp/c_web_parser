@@ -8,28 +8,18 @@
 #ifdef F_MEMORY_DEBUG
 
 #define LIST_SIZE 2048
+#define FILENAME_SIZE_LIMIT 2048
 
 typedef struct MemAllocRecord {
-    unsigned int *ptr_value;
-    unsigned int allocation_line;
-    char *allocation_file;
+	unsigned int *ptr_value;
+	unsigned int allocation_line;
+	char allocation_file[FILENAME_SIZE_LIMIT];
 } MemAllocRecordType;
 
 typedef struct MemAllocRecordList {
-    MemAllocRecordType m[LIST_SIZE];
-    unsigned int occurrences;
+	MemAllocRecordType m[LIST_SIZE];
+	unsigned int occurrences;
 } MemAllocRecordListType;
-
-typedef struct MemFreedRecord {
-    unsigned int *ptr_value;
-    unsigned int freed_line;
-    char *freed_file;
-} MemFreedRecordType;
-
-typedef struct MemFreedRecordList {
-    MemFreedRecordType m[LIST_SIZE];
-    unsigned int occurrences;
-} MemFreedRecordListType;
 
 #define malloc(size) f_debug_memory_malloc(size, __FILE__, __LINE__)
 #define calloc(num, size) f_debug_memory_calloc(num, size, __FILE__, __LINE__)

@@ -15,7 +15,7 @@
 int main(void)
 {
 #ifdef F_MEMORY_DEBUG
-    f_debug_memory_debug_init();
+	f_debug_memory_debug_init();
 #endif
 
 	const char *html_str = "<table><tr><td></td><td></td></tr></table>";
@@ -41,5 +41,8 @@ int main(void)
 		printf("%s", result.error_message);
 	}
 
+#ifdef F_MEMORY_DEBUG
+    f_debug_memory_leak_check();
+#endif
 	return 0;
 }
