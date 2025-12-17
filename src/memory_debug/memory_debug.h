@@ -1,14 +1,9 @@
 #pragma once
 
-#include <stdlib.h>
-#include <stdbool.h>
-
-#include "result.h"
-
 #ifdef F_MEMORY_DEBUG
 
 #define LIST_SIZE 2048
-#define FILENAME_SIZE_LIMIT 2048
+#define FILENAME_SIZE_LIMIT 4096
 
 typedef struct MemAllocRecord {
 	void *ptr_value;

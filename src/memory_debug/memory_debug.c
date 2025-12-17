@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
 
 #include "memory_debug.h"
@@ -91,15 +93,24 @@ void f_debug_memory_free(void *ptr, const char *file, unsigned int line)
 {
 #undef free
     int i;
-	printf("%p freed at line %u in file %s\n", ptr, line, file);
+    bool is_found = false;
 
 	for (i = 0; i < LIST_SIZE; i++) {
 		if (mem_alloc_record_list.m[i].ptr_value == ptr) {
             mem_alloc_record_list.m[i].ptr_value = NULL;
             mem_alloc_record_list.occurrences--;
+            is_found = true;
             break;
         }
 	}
+
+    if (is_found) {
+	    printf("%p freed at line %u in file %s\n", ptr, line, file);
+    }
+    else {
+	    printf("Possible double free of %p at line %u in file %s\n", ptr, line, file);
+    }
+
 	free(ptr);
 }
 
