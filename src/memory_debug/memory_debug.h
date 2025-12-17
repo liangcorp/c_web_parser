@@ -1,7 +1,5 @@
 #pragma once
 
-#ifdef F_MEMORY_DEBUG
-
 #define LIST_SIZE 2048
 #define FILENAME_SIZE_LIMIT 4096
 
@@ -29,5 +27,3 @@ void f_debug_memory_free(void *ptr, const char *file, unsigned int line);
 
 void f_debug_memory_debug_init(void);
 void f_debug_memory_leak_check(void);
-
-#endif
