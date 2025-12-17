@@ -14,19 +14,19 @@
 
 int main(void)
 {
-#ifdef F_MEMORY_DEBUG
-	f_debug_memory_debug_init();
-#endif
-
 	const char *html_str = "<table><tr><td></td><td></td></tr></table>";
-
 	html_tag_count_t htc = { 0, 0, 0, 0, 0, 0, 0, 0 };
 	ResultType result = get_html_table_tag_count(&htc, html_str);
 
 	int *test = NULL;
+
+#ifdef F_MEMORY_DEBUG
+	f_debug_memory_debug_init();
+#endif
+
 	test = calloc(1, sizeof(int));
 	free(test);
-	// free(test);
+	free(test);
 
 	if (result.is_ok) {
 		printf("<table> count: %d\n", htc.table_head_occurrence);
@@ -45,5 +45,6 @@ int main(void)
 #ifdef F_MEMORY_DEBUG
     f_debug_memory_leak_check();
 #endif
+
 	return 0;
 }

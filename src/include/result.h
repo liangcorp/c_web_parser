@@ -1,6 +1,6 @@
 #pragma once
 
-#include <stdbool.h>
+#include "bool.h"
 
 typedef struct result {
 	bool is_ok;
