@@ -13,12 +13,23 @@ typedef struct MemAllocRecord {
     unsigned int *ptr_value;
     unsigned int allocation_line;
     char *allocation_file;
-    bool is_freed;
 } MemAllocRecordType;
 
 typedef struct MemAllocRecordList {
     MemAllocRecordType m[LIST_SIZE];
+    unsigned int occurrences;
 } MemAllocRecordListType;
+
+typedef struct MemFreedRecord {
+    unsigned int *ptr_value;
+    unsigned int freed_line;
+    char *freed_file;
+} MemFreedRecordType;
+
+typedef struct MemFreedRecordList {
+    MemFreedRecordType m[LIST_SIZE];
+    unsigned int occurrences;
+} MemFreedRecordListType;
 
 #define malloc(size) f_debug_memory_malloc(size, __FILE__, __LINE__)
 #define calloc(num, size) f_debug_memory_calloc(num, size, __FILE__, __LINE__)
@@ -30,6 +41,8 @@ void *f_debug_memory_calloc(unsigned int num, unsigned int size, const char *fil
 			    unsigned int line);
 void *f_debug_memory_realloc(void *ptr, unsigned int size, const char *file, unsigned int line);
 void f_debug_memory_free(void *ptr, const char *file, unsigned int line);
+
+void f_debug_memory_debug_init(void);
 void f_debug_memory_leak_check(void);
 
 #endif

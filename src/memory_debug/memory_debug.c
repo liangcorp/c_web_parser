@@ -4,6 +4,11 @@
 
 #include "memory_debug.h"
 
+MemAllocRecordType mem_alloc_record;
+MemAllocRecordListType mem_alloc_record_list;
+MemFreedRecordType mem_freed_record;
+MemFreedRecordListType mem_freed_record_list;
+
 #else
 
 #include <stdlib.h>
@@ -60,4 +65,32 @@ void f_debug_memory_free(void *ptr, const char *file, unsigned int line)
 #undef free
 	printf("%p freed at line %u in file %s\n", ptr, line, file);
 	free(ptr);
+}
+
+void f_debug_memory_debug_init(void)
+{
+    int i;
+
+    mem_alloc_record.ptr_value = NULL;
+    mem_alloc_record.allocation_line = 0;
+    mem_alloc_record.allocation_file = NULL;
+
+    for (i = 0; i < LIST_SIZE; i++) {
+        mem_alloc_record_list.m[i] = mem_alloc_record;
+    }
+    mem_alloc_record_list.occurrences = 0;
+
+    mem_freed_record.ptr_value = NULL;
+    mem_freed_record.freed_line = 0;
+    mem_freed_record.freed_file = NULL;
+
+    for (i = 0; i < LIST_SIZE; i++) {
+        mem_freed_record_list.m[i] = mem_freed_record;
+    }
+    mem_freed_record_list.occurrences = 0;
+}
+
+void f_debug_memory_leak_check(void)
+{
+
 }

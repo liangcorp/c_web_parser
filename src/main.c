@@ -4,9 +4,6 @@
 
 #include "memory_debug.h"
 
-MemAllocRecordType mem_alloc_record = {NULL, 0, "", false};
-MemAllocRecordListType mem_alloc_record_list = { 0 };
-
 #else
 
 #include <malloc.h>
@@ -17,6 +14,10 @@ MemAllocRecordListType mem_alloc_record_list = { 0 };
 
 int main(void)
 {
+#ifdef F_MEMORY_DEBUG
+    f_debug_memory_debug_init();
+#endif
+
 	const char *html_str = "<table><tr><td></td><td></td></tr></table>";
 
 	html_tag_count_t htc = { 0, 0, 0, 0, 0, 0, 0, 0 };
