@@ -22,7 +22,8 @@ typedef struct MemAllocRecordList {
 void *f_debug_memory_malloc(unsigned int size, const char *file, unsigned int line);
 void *f_debug_memory_calloc(unsigned int num, unsigned int size, const char *file,
 			    unsigned int line);
-void *f_debug_memory_realloc(void *ptr, unsigned int size, const char *file, unsigned int line);
+void *f_debug_memory_realloc(void *ptr, unsigned int size, const char *file,
+			     unsigned int line);
 void f_debug_memory_free(void *ptr, const char *file, unsigned int line);
 
 void f_debug_memory_debug_init(void);

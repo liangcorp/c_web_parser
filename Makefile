@@ -26,6 +26,9 @@ check:
 distcheck:
 	uname -a
 
+bad_function_check:
+	bash sh/bad_function_check.sh
+
 format:
 	find -name *.h -exec clang-format -i {} \;
 	find -name *.c -exec clang-format -i {} \;

@@ -26,7 +26,7 @@ int main(void)
 
 	test = calloc(1, sizeof(int));
 	free(test);
-/* 	free(test); */
+	/* 	free(test); */
 
 	if (result.is_ok) {
 		printf("<table> count: %d\n", htc.table_head_occurrence);
@@ -43,7 +43,7 @@ int main(void)
 	}
 
 #ifdef F_MEMORY_DEBUG
-    f_debug_memory_leak_check();
+	f_debug_memory_leak_check();
 #endif
 
 	return 0;
