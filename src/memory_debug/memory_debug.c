@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <pthread.h>
 
 #include "bool.h"
 #include "memory_debug.h"
@@ -8,11 +9,15 @@
 MemAllocRecordType mem_alloc_record;
 MemAllocRecordListType mem_alloc_record_list;
 
+pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
+
 void *f_debug_memory_malloc(unsigned int size, const char *file, unsigned int line)
 {
 #undef malloc
     int i;
 	void *ptr = NULL;
+
+    pthread_mutex_lock(&lock);
 
 	ptr = malloc(size);
 
@@ -34,6 +39,8 @@ void *f_debug_memory_malloc(unsigned int size, const char *file, unsigned int li
         }
     }
 
+    pthread_mutex_unlock(&lock);
+
 	return ptr;
 }
 
@@ -42,7 +49,12 @@ void *f_debug_memory_calloc(unsigned int num, unsigned int size, const char *fil
 {
 #undef calloc
 	int i;
-	void *ptr = calloc(num, size);
+    void *ptr = NULL;
+
+    pthread_mutex_lock(&lock);
+
+    ptr = calloc(num, size);
+
 	if (ptr == NULL) {
 		printf("MEM ERROR: calloc returns NULL when trying to allocate %u bytes at line %u in file %s\n",
 		       size, line, file);
@@ -61,6 +73,8 @@ void *f_debug_memory_calloc(unsigned int num, unsigned int size, const char *fil
         }
     }
 
+    pthread_mutex_unlock(&lock);
+
 	return ptr;
 }
 
@@ -68,7 +82,12 @@ void *f_debug_memory_realloc(void *ptr, unsigned int size, const char *file, uns
 {
 #undef realloc
 	int i;
-	void *new_ptr = realloc(ptr, size);
+    void *new_ptr = NULL;
+
+    pthread_mutex_lock(&lock);
+
+	new_ptr = realloc(ptr, size);
+
 	if (new_ptr == NULL) {
 		printf("MEM ERROR: realloc returns NULL when trying to allocate %u bytes at line %u in file %s\n",
 		       size, line, file);
@@ -86,6 +105,8 @@ void *f_debug_memory_realloc(void *ptr, unsigned int size, const char *file, uns
         }
     }
 
+    pthread_mutex_unlock(&lock);
+
 	return new_ptr;
 }
 
@@ -94,6 +115,8 @@ void f_debug_memory_free(void *ptr, const char *file, unsigned int line)
 #undef free
     int i;
     bool is_found = false;
+
+    pthread_mutex_lock(&lock);
 
 	for (i = 0; i < LIST_SIZE; i++) {
 		if (mem_alloc_record_list.m[i].ptr_value == ptr) {
@@ -112,6 +135,8 @@ void f_debug_memory_free(void *ptr, const char *file, unsigned int line)
     }
 
 	free(ptr);
+
+    pthread_mutex_unlock(&lock);
 }
 
 void f_debug_memory_debug_init(void)
