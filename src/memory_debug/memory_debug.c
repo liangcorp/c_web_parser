@@ -98,16 +98,15 @@ void *f_debug_memory_realloc(void *ptr, unsigned int size, const char *file,
 		       size, line, file);
 		exit(1);
 	}
-	printf("%p realloc %u bytes of memory at line %u in file %s\n", new_ptr, size,
+	printf("%p to %p realloc %u bytes of memory at line %u in file %s\n", ptr, new_ptr, size,
 	       line, file);
 
 	for (i = 0; i < LIST_SIZE; i++) {
-		if (mem_alloc_record_list.m[i].ptr_value == NULL) {
-			mem_alloc_record_list.m[i].ptr_value = ptr;
+		if (mem_alloc_record_list.m[i].ptr_value == ptr) {
+			mem_alloc_record_list.m[i].ptr_value = new_ptr;
 			mem_alloc_record_list.m[i].allocation_line = line;
 			strncpy(mem_alloc_record_list.m[i].allocation_file, file,
 				FILENAME_SIZE_LIMIT);
-			mem_alloc_record_list.occurrences++;
 			break;
 		}
 	}
