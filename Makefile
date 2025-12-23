@@ -1,24 +1,34 @@
 CC=clang
 
 all:
-	mkdir -p libs
+	mkdir -p lib
 	mkdir -p bin
-	${CC} -Wall -Werror -Wpedantic -std=c89 -g -I ./libs/ -I ./src/include -c ./src/html_table_parser/html_table_parser.c -o ./libs/html_table_parser.o
-	ar rcs ./libs/html_table_parser.a ./libs/html_table_parser.o
+	${CC} -Wall -Werror -Wpedantic -std=c89 -g -I ./lib/ -I ./src/include -c ./src/html_table_parser/html_table_parser.c -o ./lib/html_table_parser.o
+	ar rcs ./lib/libhtml_table_parser.a ./lib/html_table_parser.o
 	cd ..
-	${CC} -Wall -Werror -Wpedantic -std=c89 -g -I ./libs/ -I ./src/include -I ./src/html_table_parser -c ./src/main.c -o ./libs/main.o
-	${CC} -Wall -Werror -Wpedantic -std=c89 -g -o ./bin/html_table_parser ./libs/main.o ./libs/html_table_parser.a
+	${CC} -Wall -Werror -Wpedantic -std=c89 -g -I ./lib/ -I ./src/include -I ./src/html_table_parser -c ./src/main.c -o ./lib/main.o
+	${CC} -Wall -Werror -Wpedantic -std=c89 -g -o ./bin/html_table_parser ./lib/main.o ./lib/libhtml_table_parser.a
 
 memory_debug:
-	mkdir -p libs
+	mkdir -p lib
 	mkdir -p bin
-	${CC} -Wall -Werror -Wpedantic -D F_MEMORY_DEBUG -std=c89 -g -I ./libs/ -I ./src/include -c ./src/html_table_parser/html_table_parser.c -o ./libs/html_table_parser.o
-	${CC} -Wall -Werror -Wpedantic -D F_MEMORY_DEBUG -std=c89 -g -I ./libs/ -I ./src/include -c ./src/memory_debug/memory_debug.c -o ./libs/memory_debug.o
-	ar rcs ./libs/html_table_parser.a ./libs/html_table_parser.o
-	ar rcs ./libs/memory_debug.a ./libs/memory_debug.o
+	${CC} -Wall -Werror -Wpedantic -D F_MEMORY_DEBUG -std=c89 -g -I ./lib/ -I ./src/include -c ./src/html_table_parser/html_table_parser.c -o ./lib/html_table_parser.o
+	${CC} -Wall -Werror -Wpedantic -D F_MEMORY_DEBUG -std=c89 -g -I ./lib/ -I ./src/include -c ./src/memory_debug/memory_debug.c -o ./lib/memory_debug.o
+	ar rcs ./lib/libhtml_table_parser.a ./lib/html_table_parser.o
+	ar rcs ./lib/libmemory_debug.a ./lib/memory_debug.o
 	cd ..
-	${CC} -Wall -Werror -Wpedantic -D F_MEMORY_DEBUG -std=c89 -g -I ./libs/ -I ./src/include -I ./src/html_table_parser -I ./src/memory_debug -c ./src/main.c -o ./libs/main.o
-	${CC} -Wall -Werror -Wpedantic -D F_MEMORY_DEBUG -std=c89 -g -o ./bin/html_table_parser ./libs/main.o ./libs/html_table_parser.a ./libs/memory_debug.a
+	${CC} -Wall -Werror -Wpedantic -D F_MEMORY_DEBUG -std=c89 -g -I ./lib/ -I ./src/include -I ./src/html_table_parser -I ./src/memory_debug -c ./src/main.c -o ./lib/main.o
+	${CC} -Wall -Werror -Wpedantic -D F_MEMORY_DEBUG -std=c89 -g -o ./bin/html_table_parser ./lib/main.o ./lib/libhtml_table_parser.a ./lib/libmemory_debug.a
+
+release:
+	mkdir -p lib
+	mkdir -p bin
+	${CC} -Wall -Werror -Wpedantic -std=c89 -I ./lib/ -I ./src/include -c ./src/html_table_parser/html_table_parser.c -o ./lib/html_table_parser.o
+	ar rcs ./lib/libhtml_table_parser.a ./lib/html_table_parser.o
+	cd ..
+	${CC} -Wall -Werror -Wpedantic -std=c89 -I ./lib/ -I ./src/include -I ./src/html_table_parser -c ./src/main.c -o ./lib/main.o
+	${CC} -Wall -Werror -Wpedantic -std=c89 -o ./bin/html_table_parser ./lib/main.o ./lib/libhtml_table_parser.a
+
 
 check:
 	${CC} --version
@@ -35,4 +45,4 @@ format:
 
 clean:
 	rm -rf ./bin
-	rm -rf ./libs
+	rm -rf ./lib

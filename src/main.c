@@ -25,7 +25,6 @@ int main(void)
 #endif
 
 	test = calloc(1, sizeof(int));
-	free(test);
 	/* 	free(test); */
 
 	if (result.is_ok) {
@@ -42,8 +41,10 @@ int main(void)
 		printf("%s", result.error_message);
 	}
 
+	free(test);
 #ifdef F_MEMORY_DEBUG
 	f_debug_memory_leak_check();
+	f_debug_memory_print();
 #endif
 
 	return 0;
