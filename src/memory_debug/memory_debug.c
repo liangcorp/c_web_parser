@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
 #include <pthread.h>
 
-#include "bool.h"
 #include "memory_debug.h"
 
 MemAllocRecordType mem_alloc_record;

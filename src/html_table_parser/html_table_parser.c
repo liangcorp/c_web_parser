@@ -1,6 +1,6 @@
+#include <stdbool.h>
 #include <string.h>
 
-#include "bool.h"
 #include "html_table_parser.h"
 
 ResultType get_html_table_tag_count(html_tag_count_t *htc, const char *html_str)
