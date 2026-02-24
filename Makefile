@@ -5,9 +5,11 @@ all:
 	mkdir -p bin
 	${CC} -Wall -Werror -Wpedantic -std=c99 -g -I ./lib/ -I ./src/include -c ./src/html_table_parser/html_table_parser.c -o ./lib/html_table_parser.o
 	ar rcs ./lib/libhtml_table_parser.a ./lib/html_table_parser.o
+	${CC} -Wall -Werror -Wpedantic -std=c99 -g -I ./lib/ -I ./src/include -c ./src/fnv_hash/fnv1a_hash.c -o ./lib/fnv1a_hash.o
+	ar rcs ./lib/libfnv1a_hash.a ./lib/fnv1a_hash.o
 	cd ..
-	${CC} -Wall -Werror -Wpedantic -std=c99 -g -I ./lib/ -I ./src/include -I ./src/html_table_parser -c ./src/main.c -o ./lib/main.o
-	${CC} -Wall -Werror -Wpedantic -std=c99 -g -o ./bin/html_table_parser ./lib/main.o ./lib/libhtml_table_parser.a
+	${CC} -Wall -Werror -Wpedantic -std=c99 -g -I ./lib/ -I ./src/include -I ./src/fnv_hash -I ./src/html_table_parser -c ./src/main.c -o ./lib/main.o
+	${CC} -Wall -Werror -Wpedantic -std=c99 -g -o ./bin/html_table_parser ./lib/main.o ./lib/libhtml_table_parser.a ./lib/libfnv1a_hash.a
 
 memory_debug:
 	mkdir -p lib
